@@ -1,1 +1,40 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <title>Kde je moje zásilka? | Dárkovna</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+  <header class="header">
+    <h1>Dárkovna</h1>
+  </header>
+
+  <main class="container">
+    <h2>Kde je moje zásilka?</h2>
+
+    <div class="track-box">
+      <input
+        type="text"
+        id="trackingCode"
+        placeholder="Zadejte číslo zásilky"
+      >
+      <button onclick="track()">Sledovat zásilku</button>
+    </div>
+
+    <p class="hint">
+      Příklad: <strong>DARKY123</strong>
+    </p>
+  </main>
+
+  <script>
+    function track() {
+      const code = document.getElementById("trackingCode").value.trim();
+      if (!code) return;
+      window.location.href = "track.html?code=" + encodeURIComponent(code);
+    }
+  </script>
+
+</body>
+</html>
