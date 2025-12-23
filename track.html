@@ -9,54 +9,163 @@
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
   <style>
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 32px;
+    }
+
+    .box {
+      background: #fff;
+      padding: 24px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    .label {
+      color: #777;
+      font-size: 13px;
+      margin-top: 16px;
+    }
+
+    .value {
+      font-size: 16px;
+      margin-top: 4px;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      margin-left: 20px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #ddd;
+    }
+
+    .event {
+      position: relative;
+      margin-bottom: 24px;
+      padding-left: 24px;
+    }
+
+    .event::before {
+      content: "";
+      position: absolute;
+      left: -2px;
+      top: 4px;
+      width: 12px;
+      height: 12px;
+      background: #bbb;
+      border-radius: 50%;
+    }
+
+    .event.active::before {
+      background: #e6007e;
+    }
+
+    .event-title {
+      font-weight: bold;
+    }
+
+    .event-time {
+      font-size: 13px;
+      color: #777;
+      margin-top: 4px;
+    }
+
     #map {
       height: 300px;
-      margin-top: 20px;
+      margin-top: 32px;
       border-radius: 8px;
+    }
+
+    @media (max-width: 800px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
 
-  <header class="header">
-    <h1>Dárkovna</h1>
-  </header>
+<header class="header">
+  <h1>Dárkovna</h1>
+</header>
 
-  <main class="container" id="content">
-    Načítání zásilky…
-  </main>
+<main class="container" id="content">
+  Načítání zásilky…
+</main>
 
-  <script src="data.js"></script>
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get("code");
+<script src="data.js"></script>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get("code");
+  const shipment = shipments[code];
+  const content = document.getElementById("content");
 
-    const shipment = shipments[code];
+  if (!shipment) {
+    content.innerHTML = `
+      <h2>Zásilka nenalezena</h2>
+      <p>Zkontrolujte prosím zadané číslo zásilky.</p>
+    `;
+  } else {
+    content.innerHTML = `
+      <h2>Zásilka ${code}</h2>
 
-    const content = document.getElementById("content");
+      <div class="layout">
+        <!-- LEVÝ SLOUPEC -->
+        <div class="box">
+          <div class="label">Obsah zásilky</div>
+          <div class="value">${shipment.name}</div>
 
-    if (!shipment) {
-      content.innerHTML = "<h2>Zásilka nenalezena</h2>";
-    } else {
-      content.innerHTML = `
-        <h2>Zásilka ${code}</h2>
-        <p><strong>Obsah:</strong> ${shipment.name}</p>
-        <p><strong>Odesláno:</strong> ${shipment.sentFrom} (${shipment.sentAt})</p>
-        <p><strong>Naposledy viděna:</strong> ${shipment.lastSeen} (${shipment.lastSeenAt})</p>
-        <p><strong>Odhadované doručení:</strong> ${shipment.eta}</p>
+          <div class="label">Odesláno z depa</div>
+          <div class="value">${shipment.sentFrom}<br>${shipment.sentAt}</div>
 
-        <div id="map"></div>
-      `;
+          <div class="label">Očekávané doručení</div>
+          <div class="value">${shipment.eta}</div>
+        </div>
 
-      const map = L.map('map').setView([shipment.lat, shipment.lng], 12);
+        <!-- PRAVÝ SLOUPEC -->
+        <div class="box">
+          <div class="timeline">
+            <div class="event">
+              <div class="event-title">Zásilka převzata do přepravy</div>
+              <div class="event-time">${shipment.sentAt}</div>
+            </div>
 
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap'
-      }).addTo(map);
+            <div class="event">
+              <div class="event-title">Doručena na depo ${shipment.lastSeen}</div>
+              <div class="event-time">${shipment.lastSeenAt}</div>
+            </div>
 
-      L.marker([shipment.lat, shipment.lng]).addTo(map);
-    }
-  </script>
+            <div class="event active">
+              <div class="event-title">Zásilka je na cestě k příjemci</div>
+              <div class="event-time">aktuální stav</div>
+            </div>
+
+            <div class="event">
+              <div class="event-title">Očekávané doručení</div>
+              <div class="event-time">${shipment.eta}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="map"></div>
+    `;
+
+    const map = L.map('map').setView([shipment.lat, shipment.lng], 11);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    L.marker([shipment.lat, shipment.lng]).addTo(map);
+  }
+</script>
 
 </body>
 </html>
