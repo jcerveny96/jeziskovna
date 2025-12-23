@@ -141,13 +141,18 @@
             </div>
 
             <div class="event">
-              <div class="event-title">Doručena na depo ${shipment.lastSeen}</div>
-              <div class="event-time">${shipment.lastSeenAt}</div>
+              <div class="event-title">Doručena na depo ${shipment.firstSeen}</div>
+              <div class="event-time">${shipment.firstSeenAt}</div>
             </div>
 
             <div class="event">
-              <div class="event-title">Převezeno na kole do Depa Brussels ${shipment.lastSeenAfter}</div>
-              <div class="event-time">${shipment.lastSeenAfterAt}</div>
+              <div class="event-title">Převezeno na kole do ${shipment.secondSeen}</div>
+              <div class="event-time">${shipment.secondSeenAt}</div>
+            </div>
+
+            <div class="event">
+              <div class="event-title">Převezeno expresním šoférem na ${shipment.thirdSeen}</div>
+              <div class="event-time">${shipment.thirdSeenAt}</div>
             </div>
 
             <div class="event active">
