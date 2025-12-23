@@ -1,5 +1,5 @@
 const shipments = {
-  DARKY123: {
+  D-RE-CK358412: {
     name: "Krabice plná vánoční radosti 🎁",
     sentFrom: "Brno",
     sentAt: "15. 12. 2025 14:32",
@@ -9,7 +9,7 @@ const shipments = {
     lat: 50.0755,
     lng: 14.4378
   },
-  LOL456: {
+  D-RE-CK358413: {
     name: "Extrémně tajná zásilka",
     sentFrom: "Ostrava",
     sentAt: "16. 12. 2025 08:01",
