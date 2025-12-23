@@ -13,7 +13,7 @@ const shipments = {
     lat: 50.0755,
     lng: 14.4378
   },
-  LOL456: {
+  DAREK2: {
     name: "Mastná, tekutá radost, 2.5 L 🎁",
     sentFrom: "Tsivaras Apokoronou, Chania, Kréta",
     sentAt: "21. 10. 2025 14:32",
