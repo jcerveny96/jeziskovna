@@ -1,6 +1,6 @@
 const shipments = {
   DARKY123: {
-    name: "Krabice plná tekuté radosti, 5 L 🎁",
+    name: "Krabice plná tekuté radosti, 5 L 🫒 🎁",
     sentFrom: "Tsivaras Apokoronou, Chania, Kréta",
     sentAt: "21. 10. 2025 14:32",
     firstSeen: "Depo Brusel 1 - příjmové centrum",
