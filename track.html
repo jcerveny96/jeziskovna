@@ -105,9 +105,74 @@
 
 <script src="data.js"></script>
 <script>
+  console.log("Shipments:", typeof shipments);
+
   const params = new URLSearchParams(window.location.search);
   const code = params.get("code");
-  const shipment = shipments[code];
+  const content = document.getElementById("content");
+
+  if (typeof shipments === "undefined") {
+    content.innerHTML = `
+      <h2>Chyba načítání dat</h2>
+      <p>Soubor <code>data.js</code> se nepodařilo načíst.</p>
+    `;
+  } else if (!shipments[code]) {
+    content.innerHTML = `
+      <h2>Zásilka nenalezena</h2>
+      <p>Zadané číslo zásilky neexistuje.</p>
+    `;
+  } else {
+    const shipment = shipments[code];
+
+    content.innerHTML = `
+      <h2>Zásilka ${code}</h2>
+
+      <div class="layout">
+        <div class="box">
+          <div class="label">Obsah zásilky</div>
+          <div class="value">${shipment.name}</div>
+
+          <div class="label">Odesláno z depa</div>
+          <div class="value">${shipment.sentFrom}<br>${shipment.sentAt}</div>
+
+          <div class="label">Očekávané doručení</div>
+          <div class="value">${shipment.eta}</div>
+        </div>
+
+        <div class="box">
+          <div class="timeline">
+            <div class="event">
+              <div class="event-title">Zásilka převzata do přepravy</div>
+              <div class="event-time">${shipment.sentAt}</div>
+            </div>
+
+            <div class="event">
+              <div class="event-title">Doručena na depo</div>
+              <div class="event-time">${shipment.lastSeenAt}</div>
+            </div>
+
+            <div class="event active">
+              <div class="event-title">Na cestě k příjemci</div>
+              <div class="event-time">aktuální stav</div>
+            </div>
+
+            <div class="event">
+              <div class="event-title">Očekávané doručení</div>
+              <div class="event-time">${shipment.eta}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="map"></div>
+    `;
+
+    const map = L.map('map').setView([shipment.lat, shipment.lng], 11);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    L.marker([shipment.lat, shipment.lng]).addTo(map);
+  }
+</script>
+
   const content = document.getElementById("content");
 
   if (!shipment) {
