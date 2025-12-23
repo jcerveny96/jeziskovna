@@ -10,8 +10,8 @@ const shipments = {
     thirdSeen: "Depo Bratislava – třídicí centrum",
     thirdSeenAt: "30. 11. 2025 02:13",
     eta: "31. 12. 2025 v odpoledních hodinách",
-    lat: 50.0755,
-    lng: 14.4378
+    lat: 48.159526,
+    lng: 17.120571
   },
   DAREK2: {
     name: "Mastná, tekutá radost, 2.5 L 🎁",
@@ -24,7 +24,7 @@ const shipments = {
     thirdSeen: "Depo Bratislava – třídicí centrum",
     thirdSeenAt: "30. 11. 2025 02:13",
     eta: "po domluvě s příjemcem - nejdříve 2. 1. 2026",
-    lat: 49.8209,
-    lng: 18.2625
+    lat: 48.159526,
+    lng: 17.120571
   }
 };
