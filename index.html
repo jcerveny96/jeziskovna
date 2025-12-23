@@ -28,13 +28,20 @@
     </p>
   </main>
 
-  <script>
-    function track() {
-      const code = document.getElementById("trackingCode").value.trim();
-      if (!code) return;
-      window.location.href = "track.html?code=" + encodeURIComponent(code);
+<script src="data.js"></script>
+<script>
+  function track() {
+    const code = document.getElementById("trackingCode").value.trim();
+    if (!code) return;
+
+    if (!shipments[code]) {
+      alert("Zásilka s tímto číslem nebyla nalezena.");
+      return;
     }
-  </script>
+
+    window.location.href = "track.html?code=" + encodeURIComponent(code);
+  }
+</script>
 
 </body>
 </html>
