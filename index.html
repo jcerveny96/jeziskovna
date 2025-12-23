@@ -4,6 +4,17 @@
   <meta charset="UTF-8">
   <title>Kde je moje zásilka? | Dárkovna</title>
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    .error {
+      margin-top: 16px;
+      padding: 12px;
+      background: #fdecea;
+      color: #b00020;
+      border-radius: 6px;
+      display: none;
+    }
+  </style>
 </head>
 <body>
 
@@ -20,28 +31,66 @@
         id="trackingCode"
         placeholder="Zadejte číslo zásilky"
       >
-      <button onclick="track()">Sledovat zásilku</button>
+      <button id="trackBtn">Sledovat zásilku</button>
     </div>
 
+    <div id="error" class="error"></div>
+
     <p class="hint">
-      Příklad: <strong>DAREK2165498244</strong>
+      Příklad: <strong>DARKY123</strong> nebo <strong>LOL456</strong>
     </p>
   </main>
 
-<script src="data.js"></script>
-<script>
-  function track() {
-    const code = document.getElementById("trackingCode").value.trim();
-    if (!code) return;
+  <!-- Nejdřív data -->
+  <script src="data.js"></script>
 
-    if (!shipments[code]) {
-      alert("Zásilka s tímto číslem nebyla nalezena.");
-      return;
+  <!-- Pak logika -->
+  <script>
+    const input = document.getElementById("trackingCode");
+    const button = document.getElementById("trackBtn");
+    const errorBox = document.getElementById("error");
+
+    function showError(message) {
+      errorBox.textContent = message;
+      errorBox.style.display = "block";
     }
 
-    window.location.href = "track.html?code=" + encodeURIComponent(code);
-  }
-</script>
+    function clearError() {
+      errorBox.style.display = "none";
+    }
+
+    function track() {
+      clearError();
+
+      const code = input.value.trim();
+
+      if (!code) {
+        showError("Zadejte prosím číslo zásilky.");
+        return;
+      }
+
+      if (typeof shipments === "undefined") {
+        showError("Chyba načítání dat zásilek (data.js).");
+        return;
+      }
+
+      if (!shipments[code]) {
+        showError("Zásilka s tímto číslem nebyla nalezena.");
+        return;
+      }
+
+      window.location.href =
+        "track.html?code=" + encodeURIComponent(code);
+    }
+
+    button.addEventListener("click", track);
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        track();
+      }
+    });
+  </script>
 
 </body>
 </html>
