@@ -1,1 +1,62 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <title>Detail zásilky | Dárkovna</title>
+  <link rel="stylesheet" href="style.css">
 
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <style>
+    #map {
+      height: 300px;
+      margin-top: 20px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <h1>Dárkovna</h1>
+  </header>
+
+  <main class="container" id="content">
+    Načítání zásilky…
+  </main>
+
+  <script src="data.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+
+    const shipment = shipments[code];
+
+    const content = document.getElementById("content");
+
+    if (!shipment) {
+      content.innerHTML = "<h2>Zásilka nenalezena</h2>";
+    } else {
+      content.innerHTML = `
+        <h2>Zásilka ${code}</h2>
+        <p><strong>Obsah:</strong> ${shipment.name}</p>
+        <p><strong>Odesláno:</strong> ${shipment.sentFrom} (${shipment.sentAt})</p>
+        <p><strong>Naposledy viděna:</strong> ${shipment.lastSeen} (${shipment.lastSeenAt})</p>
+        <p><strong>Odhadované doručení:</strong> ${shipment.eta}</p>
+
+        <div id="map"></div>
+      `;
+
+      const map = L.map('map').setView([shipment.lat, shipment.lng], 12);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap'
+      }).addTo(map);
+
+      L.marker([shipment.lat, shipment.lng]).addTo(map);
+    }
+  </script>
+
+</body>
+</html>
