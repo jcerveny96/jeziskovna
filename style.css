@@ -33,6 +33,13 @@ body {
   font-size: 16px;
 }
 
+.label {
+  color: #f6f6f6;   /* zásilkovnovská barva */
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase; /* volitelné */
+}
+
 .track-box button {
   padding: 12px 20px;
   background: #c70825;
