@@ -1,5 +1,5 @@
 const shipments = {
-  D-REK-235481: {
+  D4REK235481: {
     name: "Krabice plná tekuté radosti, 5 L 🎁",
     sentFrom: "Tsivaras Apokoronou, Chania, Kréta",
     sentAt: "21. 10. 2025  14:32",
@@ -13,7 +13,7 @@ const shipments = {
     lat: 48.159526,
     lng: 17.120571
   },
-  D-REK-235482: {
+  D4REK235482: {
     name: "Mastná, tekutá radost, 2.5 L 🎁",
     sentFrom: "Tsivaras Apokoronou, Chania, Kréta",
     sentAt: "21. 10. 2025  14:32",
