@@ -18,7 +18,7 @@ const shipments = {
     sentFrom: "Tsivaras Apokoronou, Chania, Kréta",
     sentAt: "21. 10. 2025  14:32",
     firstSeen: "Depo Brusel 1 - příjmové centrum",
-    firstSeenAt: "22. 11. 2025  09:11",
+    firstSeenAt: "22. 11. 2025  09:12",
     secondSeen: "Depo Brusel 2 - rozvozové centrum RADO",
     secondSeenAt: "25. 11. 2025  16:49",
     thirdSeen: "Depo Bratislava – třídicí centrum",
